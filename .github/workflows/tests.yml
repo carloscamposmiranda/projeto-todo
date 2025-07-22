@@ -1,0 +1,33 @@
+name: Python Tests
+
+on:  # Quando o workflow será acionado?
+  push:
+    branches: [ "main", "develop" ]  # Executa ao push em main ou develop
+  pull_request:
+    branches: [ "main" ]  # Executa em PRs direcionadas à main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Sistema operacional
+
+    steps:
+      # 1. Baixa o código do repositório
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Configura Python
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      # 3. Instala dependências (se tiver um requirements.txt)
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest  # Exemplo: instala o pytest
+
+      # 4. Roda os testes (assumindo que você tem testes em /tests/)
+      - name: Run tests
+        run: |
+          pytest tests/ -v  # Substitua pelo comando real dos seus testes
